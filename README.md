@@ -2,6 +2,10 @@
 
 [Specification](https://docs.google.com/document/d/1wnZu4hu9RsH7COFtpa8af3pQy0NtOGhR54ajZxs61ZE/edit#)
 
+I used later versions of dependencies.
+
+`node -v` returns `v12.22.7`.
+
 ## Overview
 
 Every User belongs to 1 Organization. This is not directly modelled or authenticated, but note that resources must have an `orgId` and APIs should not cross Organization boundaries.
@@ -102,3 +106,17 @@ You can't see it and don't need to access it from the dashboard, but a version a
 A minimal approach assumes the user is already identified and that filtering middleware is outside the scope of this exercise. Feel free to extend that if you have the time. Again, include in your README any known limitations or assumptions you made.
 
 > I assume each user belongs to an organization. I didn't model this directly and did not add authentication, however I did add a path param to capture the `orgId` of the request. This way, different orgs do not share Services.
+
+## Thoughts
+
+This is my first time working with NestJS and TypeORM, so had a learning curve on both of those.
+
+TypeORM was better than:
+
+- Django's ORM, simply because of Intellisense/typechecks/ease of use
+- Mongoose, because mongoose does not handle types well
+- Java, because (as with everything Java) it's very verbose
+
+I did not like that TypeORM did not have a good answer on string escaping for `LIKE` functionality. I'd expect that from an ORM, so I'd be worried about community adoption and support.
+
+I liked that NestJS was opinionated. The structure is very Angular-like (which is very Spring-like). The docs are fairly nice, though input validation was a bit tricky to work out. I would have hoped for a few more built-in pipes like `@Max()` or `@Min()` and to handle skipping validation on optional parameters. Spring is a bit nicer here, though I guess it beats raw Express.
