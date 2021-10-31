@@ -28,22 +28,16 @@ curl 'http://localhost:3000/v1/organization/1/services?pageSize=2&page=2'
 {
   "data": [
     {
-      "description": "Lorem 2",
-      "id": "413740d4-7641-4466-aa32-3491990f3bed",
-      "name": "FX Rates International",
-      "version": [
-        {
-          "name": "v1",
-          "status": "DRAFT",
-          "swaggerLink": "https://swagger.io/v1"
-        }
-      ]
+      "description": "Lorem 1",
+      "id": "ba82a653-9bfd-4a9f-878f-0ff68a462583",
+      "name": "FX Currency Rates International",
+      "versions": []
     },
     {
       "description": "Lorem ipsum",
-      "id": "f20a0612-3211-4650-bcb9-0ee703b9bcb5",
+      "id": "fb248ffb-5a3d-4b20-ac3d-55f9baa2dcaf",
       "name": "Locate Us",
-      "version": [
+      "versions": [
         {
           "name": "v1",
           "status": "DRAFT",
