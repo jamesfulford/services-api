@@ -20,8 +20,10 @@ async function bootstrap() {
   await app.listen(3000);
 
   const servicesResponse = (
-    await axios.get('http://localhost:3000/organization/1/services')
+    await axios.get(
+      'http://localhost:3000/organization/1/services?pageSize=2&page=2',
+    )
   ).data;
-  console.log(servicesResponse.data[0]);
+  console.log(servicesResponse);
 }
 bootstrap();
