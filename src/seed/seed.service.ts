@@ -35,7 +35,27 @@ export class SeedService {
     return await this.serviceRepository.save(service);
   }
 
+  async clearDatabase(): Promise<void> {
+    const versions = await this.versionRepository.find();
+    const services = await this.serviceRepository.find({
+      where: { orgId: 1 },
+      relations: ['versions'],
+    });
+
+    for (const version of versions) {
+      await this.versionRepository.delete(version.id);
+    }
+    for (const service of services) {
+      await this.serviceRepository.delete({
+        id: service.id,
+        orgId: service.orgId,
+      });
+    }
+  }
+
   async seedDatabase(): Promise<void> {
+    await this.clearDatabase();
+
     let service: Service;
     service = await this.seedService(1, 'Locate Us', 'Lorem ipsum');
     await this.seedVersion('v1', service);
@@ -64,23 +84,5 @@ export class SeedService {
     await this.seedVersion('v1', service);
     await this.seedVersion('v2', service);
     await this.seedVersion('v3', service);
-
-    const versions = await this.versionRepository.find();
-    console.log(versions);
-    const services = await this.serviceRepository.find({
-      where: { orgId: 1 },
-      relations: ['versions'],
-    });
-    console.log(services);
-
-    for (const version of versions) {
-      await this.versionRepository.delete(version.id);
-    }
-    for (const service of services) {
-      await this.serviceRepository.delete({
-        id: service.id,
-        orgId: service.orgId,
-      });
-    }
   }
 }
