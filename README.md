@@ -1,73 +1,104 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# services-api
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+[Specification](https://docs.google.com/document/d/1wnZu4hu9RsH7COFtpa8af3pQy0NtOGhR54ajZxs61ZE/edit#)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Overview
 
-## Description
+Every User belongs to 1 Organization. This is not directly modelled or authenticated, but note that resources must have an `orgId` and APIs should not cross Organization boundaries.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Under each Organization are many [Services](./src/services/service.entity.ts), each of which _may_ have multiple [Versions](./src/services/versions/version.entity.ts).
 
-## Installation
+(All test data is seeded in orgId 1.)
+
+## List Services API
+
+GET /v1/organization/{orgId}/services
+
+Returns paginated list of Services (and respective Versions) sorted alphabetically.
 
 ```bash
-$ npm install
+curl 'http://localhost:3000/v1/organization/1/services?pageSize=2&page=2'
 ```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```json
+{
+  "data": [
+    {
+      "description": "Lorem 2",
+      "id": "413740d4-7641-4466-aa32-3491990f3bed",
+      "name": "FX Rates International",
+      "version": [
+        {
+          "name": "v1",
+          "status": "DRAFT",
+          "swaggerLink": "https://swagger.io/v1"
+        }
+      ]
+    },
+    {
+      "description": "Lorem ipsum",
+      "id": "f20a0612-3211-4650-bcb9-0ee703b9bcb5",
+      "name": "Locate Us",
+      "version": [
+        {
+          "name": "v1",
+          "status": "DRAFT",
+          "swaggerLink": "https://swagger.io/v1"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "orgId": 1
+  },
+  "pagination": {
+    "currentPage": 2,
+    "firstPage": 0,
+    "lastPage": 2,
+    "nextPage": null,
+    "pageSize": 2,
+    "total": 6
+  }
+}
 ```
 
-## Test
+### Filtering
 
-```bash
-# unit tests
-$ npm run test
+- `name=Currency`: optional string, filters by Service name.
 
-# e2e tests
-$ npm run test:e2e
+No other fields were worth filtering on, see Assumptions.
 
-# test coverage
-$ npm run test:cov
-```
+### Pagination
 
-## Support
+- `page=0`: optional number, defaults to 0. Used for offset-based pagination.
+- `pageSize=10`: optional number, defaults to 10. Used for offset-based pagination.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Get By ID
 
-## Stay in touch
+GET /v1/organization/{orgId}/services/{id}
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+No additional fields provided at this time.
 
-## License
+## Additional Assumptions
 
-Nest is [MIT licensed](LICENSE).
+There is no sorting UI in the UX and requirements did not specify anything on sorting. If needed, can add as enhancement alongside UI.
+
+### Questions I asked Karen:
+
+1. What are the future product plans for "versions" of a service? Right now, I'm not putting in a different table because it is just a list of strings (limiting scope creep), but I might make different decisions if Product has already decided where to go with versions.
+
+You can't see it and don't need to access it from the dashboard, but a version also has documentation (a Swagger file) and a status (draft, live, deprecated, end-of-life).
+
+> Because of this, I opted to make Versions a separate entity. I also included a field for a swagger link and a version status.
+
+2. Is the search feature intended for discovering new services or re-finding a service? "Search for a specific service" sounds like the user knows the name already, so I don't have to make descriptions searchable or make matching very fuzzy/lenient.
+
+"Search" in this case means "filter" -- from the list of services already in the database/, find matches based on the user input. Pro tip: partial match ("name like '%foo%'" or similar) never got anyone disqualified. ;-) Include in your README which approach you chose and why.
+
+> With this answer, I decided not to additionally search the 'description' field. I didn't think a broader fuzzy search was necessary.
+
+3. Who are my users? Is it fair to assume for this exercise that Konnect (for the purposes of this exercise) is a multi-tenant app, so if you and I were in the Walmart tenant we could see the same services but will not be able to see any of the NYSE tenant's services?
+
+A minimal approach assumes the user is already identified and that filtering middleware is outside the scope of this exercise. Feel free to extend that if you have the time. Again, include in your README any known limitations or assumptions you made.
+
+> I assume each user belongs to an organization. I didn't model this directly and did not add authentication, however I did add a path param to capture the `orgId` of the request. This way, different orgs do not share Services.

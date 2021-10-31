@@ -59,18 +59,12 @@ export class SeedService {
     let service: Service;
     service = await this.seedService(1, 'Locate Us', 'Lorem ipsum');
     await this.seedVersion('v1', service);
-    await this.seedVersion('v2', service);
-    await this.seedVersion('v3', service);
 
     service = await this.seedService(1, 'Collect Monday');
     await this.seedVersion('v1', service);
-    await this.seedVersion('v2', service);
-    await this.seedVersion('v3', service);
 
     service = await this.seedService(1, 'Contact Us');
     await this.seedVersion('v1', service);
-    await this.seedVersion('v2', service);
-    await this.seedVersion('v3', service);
 
     service = await this.seedService(1, 'Contact Us');
     await this.seedVersion('v1', service);
@@ -78,11 +72,8 @@ export class SeedService {
     await this.seedVersion('v3', service);
 
     service = await this.seedService(1, 'FX Rates International', 'Lorem 1');
-    // TODO: can a service have no versions?
 
     service = await this.seedService(1, 'FX Rates International', 'Lorem 2');
     await this.seedVersion('v1', service);
-    await this.seedVersion('v2', service);
-    await this.seedVersion('v3', service);
   }
 }
