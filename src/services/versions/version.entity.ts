@@ -1,4 +1,4 @@
-import { Service } from 'src/services/service.entity';
+import { Service } from '../service.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 export enum VersionStatus {

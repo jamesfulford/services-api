@@ -1,4 +1,4 @@
-import { Version } from 'src/services/versions/version.entity';
+import { Version } from './versions/version.entity';
 import {
   Entity,
   Column,

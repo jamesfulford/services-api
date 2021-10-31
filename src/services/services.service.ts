@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {
   mapPaginationParamsToSkipTake,
   buildPagination,
-} from 'src/pagination/pagination.typeorm';
-import { Pagination, PaginationParams } from 'src/pagination/pagination.types';
+} from '../pagination/pagination.typeorm';
+import { Pagination, PaginationParams } from '../pagination/pagination.types';
 import { ILike, Repository } from 'typeorm';
 import { Service } from './service.entity';
 

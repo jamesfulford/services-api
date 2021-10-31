@@ -19,7 +19,7 @@ export class DatabaseConfigService {
       username,
       password,
       database,
-      entities: ['dist/**/*.entity{.ts,.js}'],
+      autoLoadEntities: true,
       synchronize,
     });
   }

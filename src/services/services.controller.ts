@@ -11,7 +11,7 @@ import {
 import {
   buildAndAssertPageOf,
   extractAndAssertPaginationParams,
-} from 'src/pagination/pagination.http';
+} from '../pagination/pagination.http';
 import { convertServiceToDto } from './service.dto';
 import { ServicesService } from './services.service';
 
