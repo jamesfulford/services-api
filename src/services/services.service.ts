@@ -31,7 +31,6 @@ export class ServicesService {
   }> {
     const { skip, take } = mapPaginationParamsToSkipTake(paginationParams);
 
-    // TODO(jamesfulford): add sorting
     const [services, total] = await this.serviceRepository.findAndCount({
       where: {
         orgId,
@@ -41,6 +40,14 @@ export class ServicesService {
       relations: ['versions'],
       take,
       skip,
+      // assumption: "Services" will not be created or edited
+      // between page calls (meaning pagination is stable).
+      // (if was not stable, cursor pagination might be better choice)
+
+      // so, we can sort by anything we want, so long as it's consistent across pages.
+      order: {
+        name: 'ASC',
+      },
     });
 
     const pagination = buildPagination(total, paginationParams);
