@@ -71,9 +71,17 @@ export class SeedService {
     await this.seedVersion('v2', service);
     await this.seedVersion('v3', service);
 
-    service = await this.seedService(1, 'FX Rates International', 'Lorem 1');
+    service = await this.seedService(
+      1,
+      'FX Currency Rates International',
+      'Lorem 1',
+    );
 
-    service = await this.seedService(1, 'FX Rates International', 'Lorem 2');
+    service = await this.seedService(
+      1,
+      'FX Currency Rates International',
+      'Lorem 2',
+    );
     await this.seedVersion('v1', service);
   }
 }
