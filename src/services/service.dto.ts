@@ -5,7 +5,7 @@ export class ServiceDto {
   id: string;
   name: string;
   description: string;
-  version: VersionDto[];
+  versions: VersionDto[];
 }
 
 export function convertServiceToDto(service: Service): ServiceDto {
@@ -13,6 +13,6 @@ export function convertServiceToDto(service: Service): ServiceDto {
     id: service.id,
     name: service.name,
     description: service.description,
-    version: service.versions.map((version) => convertVersionToDto(version)),
+    versions: service.versions.map((version) => convertVersionToDto(version)),
   };
 }
