@@ -3,8 +3,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SeedService } from './seed/seed.service';
 
-import axios from 'axios';
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableVersioning({
@@ -20,12 +18,5 @@ async function bootstrap() {
   await app.get(SeedService).seedDatabase();
 
   await app.listen(3000);
-
-  const servicesResponse = (
-    await axios.get(
-      'http://localhost:3000/v1/organization/1/services?pageSize=2&page=2',
-    )
-  ).data;
-  console.log(servicesResponse);
 }
 bootstrap();
