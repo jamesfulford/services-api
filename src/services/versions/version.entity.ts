@@ -2,15 +2,15 @@ import { Service } from 'src/services/service.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 export enum VersionStatus {
-    DRAFT = 'DRAFT',
-    LIVE = 'LIVE',
-    DEPRECATED = 'DEPRECATED',
-    END_OF_LIFE = 'END_OF_LIFE',
+  DRAFT = 'DRAFT',
+  LIVE = 'LIVE',
+  DEPRECATED = 'DEPRECATED',
+  END_OF_LIFE = 'END_OF_LIFE',
 }
 
 @Entity()
 export class Version {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({ type: 'varchar', length: 128 })
@@ -22,6 +22,6 @@ export class Version {
   @Column({ type: 'enum', enum: VersionStatus, default: VersionStatus.DRAFT })
   status: VersionStatus;
 
-  @ManyToOne(() => Service, service => service.versions)
+  @ManyToOne(() => Service, (service) => service.versions)
   service: Service;
 }
