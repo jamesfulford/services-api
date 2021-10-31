@@ -15,7 +15,7 @@ import {
 import { convertServiceToDto } from './service.dto';
 import { ServicesService } from './services.service';
 
-@Controller('/organization/:orgId/services')
+@Controller({ path: '/organization/:orgId/services', version: '1' })
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}
 

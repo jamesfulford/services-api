@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SeedService } from './seed/seed.service';
@@ -7,7 +7,9 @@ import axios from 'axios';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableVersioning();
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -21,7 +23,7 @@ async function bootstrap() {
 
   const servicesResponse = (
     await axios.get(
-      'http://localhost:3000/organization/1/services?pageSize=2&page=2',
+      'http://localhost:3000/v1/organization/1/services?pageSize=2&page=2',
     )
   ).data;
   console.log(servicesResponse);
