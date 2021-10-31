@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Query,
 } from '@nestjs/common';
+import { convertServiceToDto } from './service.dto';
 import { ServicesService } from './services.service';
 
 @Controller('/organization/:orgId/services')
@@ -24,7 +25,7 @@ export class ServicesController {
       meta: {
         orgId,
       },
-      data: services,
+      data: services.map(convertServiceToDto),
     };
   }
 
@@ -44,7 +45,7 @@ export class ServicesController {
       meta: {
         orgId,
       },
-      data: service,
+      data: convertServiceToDto(service),
     };
   }
 }

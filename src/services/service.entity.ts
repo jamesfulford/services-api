@@ -10,7 +10,7 @@ import {
 @Entity()
 export class Service {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @PrimaryColumn()
   orgId: number;
