@@ -46,7 +46,7 @@ export function buildAndAssertPageOf<T>(
   data: T[],
   pagination: Pagination,
 ): PageOf<T> {
-  if (pagination.currentPage > pagination.lastPage) {
+  if (pagination.total && pagination.currentPage > pagination.lastPage) {
     throw new HttpException(
       `page ${pagination.currentPage} not found`,
       HttpStatus.NOT_FOUND,

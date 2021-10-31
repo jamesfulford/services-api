@@ -26,6 +26,6 @@ export function buildPagination(
     firstPage: 0,
     currentPage: page,
     nextPage: total > (page + 1) * pageSize ? page + 1 : null,
-    lastPage: Math.ceil(total / pageSize) - 1,
+    lastPage: Math.max(Math.ceil(total / pageSize) - 1, 0),
   };
 }
