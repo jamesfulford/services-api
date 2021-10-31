@@ -5,7 +5,7 @@ import {
   buildPagination,
 } from 'src/pagination/pagination.typeorm';
 import { Pagination, PaginationParams } from 'src/pagination/pagination.types';
-import { Like, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Service } from './service.entity';
 
 // TypeORM does not seem to do escaping very well, so we need to do it manually
@@ -35,7 +35,7 @@ export class ServicesService {
       where: {
         orgId,
         // only search for name if truthy
-        ...(name && { name: Like(`%${escapeLikeString(name)}%`) }),
+        ...(name && { name: ILike(`%${escapeLikeString(name)}%`) }),
       },
       relations: ['versions'],
       take,
